@@ -6,8 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "send": "node index.js",
-    "serve": "node dev_server.js",
-    "install": "npm install && cd node_modules/simplyemail/ && npm install"
+    "serve": "node dev_server.js"
   },
   "author": "tkon99",
   "license": "GPLv3",
