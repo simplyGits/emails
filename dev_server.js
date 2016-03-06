@@ -8,6 +8,12 @@ app.get('/cijfer', function (req, res) {
 	});
 });
 
+app.get('/project', function (req, res) {
+	email.project("Miljoenennota", "https://app.simplyhomework.nl/class/YfDrLGoRfkRoqNe6E", "https://app.simplyhomework.nl/settings", "Henk de Bakker", function(html){
+		res.send(html);
+	});
+});
+
 app.listen(3000, function () {
 	console.log('Dev server running on port 3000');
 });
