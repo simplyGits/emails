@@ -24,13 +24,17 @@ process.stdin.on('data', function (text) {
 	text = text.trim();
 	switch (text){
 		case "cijfer":
-			email.cijfer("Nederlands", "https://app.simplyhomework.nl/class/YfDrLGoRfkRoqNe6E", "https://app.simplyhomework.nl/settings", 5.4, 6.2, function(result){
+			email.cijfer("Nederlands", "https://app.simplyhomework.nl/class/YfDrLGoRfkRoqNe6E", "https://app.simplyhomework.nl/settings", 5.4, 6.2).then(function(result){
 				sender(result, text);
+			}, function(error){
+				console.log(error);
 			});
 			break;
 		case "project":
-			email.project("Miljoenennota", "https://app.simplyhomework.nl/class/YfDrLGoRfkRoqNe6E", "https://app.simplyhomework.nl/settings", "Henk de Bakker", function(result){
+			email.project("Miljoenennota", "https://app.simplyhomework.nl/class/YfDrLGoRfkRoqNe6E", "https://app.simplyhomework.nl/settings", "Henk de Bakker").then(function(result){
 				sender(result, text);
+			}, function(error){
+				console.log(error);
 			});
 			break;
 		default:
