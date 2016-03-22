@@ -1,73 +1,86 @@
-var fs = require('fs');
-var email = require("simplyemail");
-var nodemailer = require('nodemailer');
-var tokens = require("./tokens.json");
+'use strict';
+
+const fs = require('fs');
+const email = require('simplyemail');
+const nodemailer = require('nodemailer');
+// const tokens = require('./tokens.json');
 
 /* To create unique subject so inbox doesn't bundle it. */
-function makeid(){
-		var text = "";
-		var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+function genId () {
+	let text = '';
 
-		for( var i=0; i < 5; i++ )
-				text += possible.charAt(Math.floor(Math.random() * possible.length));
+	for (let i = 0; i < 5; i++) {
+		text += possible.charAt(Math.floor(Math.random() * possible.length));
+	}
 
-		return text;
+	return text;
 }
 
 process.stdin.resume();
 process.stdin.setEncoding('utf8');
-var util = require('util');
+const util = require('util');
 
-console.log("Welke template verzenden?");
+console.log('Welke template verzenden?');
 process.stdin.on('data', function (text) {
 	//console.log('User gave input: ', util.inspect(text));
-	text = text.trim();
-	switch (text){
-		case "cijfer":
-			email.cijfer("Nederlands", "https://app.simplyhomework.nl/class/YfDrLGoRfkRoqNe6E", "https://app.simplyhomework.nl/settings", 5.4, 6.2).then(function(result){
-				sender(result, text);
-			}, function(error){
-				console.log(error);
-			});
-			break;
-		case "project":
-			email.project("Miljoenennota", "https://app.simplyhomework.nl/class/YfDrLGoRfkRoqNe6E", "https://app.simplyhomework.nl/settings", "Henk de Bakker").then(function(result){
-				sender(result, text);
-			}, function(error){
-				console.log(error);
-			});
-			break;
-		default:
-			console.log("template not found.");
-			process.exit();
+	text = text.replace(/\W/g, '');
+	if (text == 'cijfer') {
+		email.cijfer({
+			className: 'Nederlands',
+			classUrl: 'https://app.simplyhomework.nl/class/YfDrLGoRfkRoqNe6E',
+			settingsUrl: 'https://app.simplyhomework.nl/settings',
+			grade: '5,4',
+			passed: false,
+			average: '6,2',
+		}).then(function(result){
+			console.log(result);
+			// sender(result, text);
+		}, function(error){
+			console.log(error);
+		});
+	} else if (text == 'project') {
+		email.project({
+			projectName: 'Miljoenennota',
+			projectUrl: 'https://app.simplyhomework.nl/class/YfDrLGoRfkRoqNe6E',
+			settingsUrl: 'https://app.simplyhomework.nl/settings',
+			personName: 'Henk de Bakker',
+		}).then(function(result){
+			console.log(result);
+			// sender(result, text);
+		}, function(error){
+			console.log(error);
+		});
+	} else {
+		throw new Error('template not found');
 	}
 });
 
-function sender(result, template){
+function sender (result, template) {
 	/* Send email */
 	// create reusable transporter object using the default SMTP transport
 	// gmailUrl: smtps://xxxxx%40gmail.com:password@smtp.gmail.com
-	var transporter = nodemailer.createTransport(tokens.gmailUrl);
+	const transporter = nodemailer.createTransport(tokens.gmailUrl);
 
 	// setup e-mail data with unicode symbols
-	var mailOptions = {
+	const mailOptions = {
 		from: '"Thomas Konings" <tkon99@gmail.com>', // sender address
 		to: 'Thomas Konings, tkon99@gmail.com', // list of receivers
-		subject: 'sH test - '+template+' - '+makeid(), // Subject line
-		html: result // html body
+		subject: `sH test - ${template} - ${genId()}`,
+		html: result, // html body
 	};
 
 	// send mail with defined transport object
-	transporter.sendMail(mailOptions, function(error, info){
-		if(error){
-				return console.log(error);
+	transporter.sendMail(mailOptions, function (error, info) {
+		if (error != null) {
+			return console.log(error);
 		}
 		console.log('Message sent: ' + info.response);
 		process.exit();
 	});
 
 	/* Save code */
-	fs.writeFile('test.html', result, function(err){
+	fs.writeFile('test.html', result, function (err) {
 		if (err) throw err;
 		console.log('Code saved to test.html');
 	});

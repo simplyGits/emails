@@ -1,19 +1,35 @@
-var email = require("simplyemail");
+'use strict';
+
+var email = require('simplyemail');
 var express = require('express');
+
+const PORT = 3000;
 var app = express();
 
 app.get('/cijfer', function (req, res) {
-	email.cijfer("Nederlands", "https://app.simplyhomework.nl/class/YfDrLGoRfkRoqNe6E", "https://app.simplyhomework.nl/settings", 9.2, 8.5,function(html){
-		res.send(html);
+	email.cijfer({
+		className: 'Nederlands',
+		classUrl: 'https://app.simplyhomework.nl/class/YfDrLGoRfkRoqNe6E',
+		settingsUrl: 'https://app.simplyhomework.nl/settings',
+		grade: '9,2',
+		passed: true,
+		average: '8,5'
+	}).then(function (res) {
+		res.end(res);
 	});
 });
 
 app.get('/project', function (req, res) {
-	email.project("Miljoenennota", "https://app.simplyhomework.nl/class/YfDrLGoRfkRoqNe6E", "https://app.simplyhomework.nl/settings", "Henk de Bakker", function(html){
-		res.send(html);
+	email.project({
+		projectName: 'Miljoenennota',
+		projectUrl: 'https://app.simplyhomework.nl/class/YfDrLGoRfkRoqNe6E',
+		settingsUrl: 'https://app.simplyhomework.nl/settings',
+		personName: 'Henk de Bakker'
+	}).then(function (res) {
+		res.end(res);
 	});
 });
 
-app.listen(3000, function () {
-	console.log('Dev server running on port 3000');
+app.listen(PORT, function () {
+	console.log('Dev server running on port', PORT);
 });
