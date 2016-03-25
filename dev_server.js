@@ -14,8 +14,8 @@ app.get('/cijfer', function (req, res) {
 		grade: '9,2',
 		passed: true,
 		average: '8,5'
-	}).then(function (res) {
-		res.end(res);
+	}).then(function (data) {
+		res.end(data);
 	});
 });
 
@@ -25,8 +25,8 @@ app.get('/project', function (req, res) {
 		projectUrl: 'https://app.simplyhomework.nl/class/YfDrLGoRfkRoqNe6E',
 		settingsUrl: 'https://app.simplyhomework.nl/settings',
 		personName: 'Henk de Bakker'
-	}).then(function (res) {
-		res.end(res);
+	}).then(function (data) {
+		res.end(data);
 	});
 });
 
