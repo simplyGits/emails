@@ -30,6 +30,16 @@ app.get('/project', function (req, res) {
 	});
 });
 
+app.get('/html', function (req, res) {
+	email.html({
+		title: 'Test HTML email',
+		body: '<h2>simplySwag</h2>',
+		settingsUrl: 'https://app.simplyhomework.nl/settings'
+	}).then(function (data) {
+		res.end(data);
+	});
+});
+
 app.listen(PORT, function () {
 	console.log('Dev server running on port', PORT);
 });

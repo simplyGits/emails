@@ -3,7 +3,7 @@
 const fs = require('fs');
 const email = require('simplyemail');
 const nodemailer = require('nodemailer');
-// const tokens = require('./tokens.json');
+const tokens = require('./tokens.json');
 
 /* To create unique subject so inbox doesn't bundle it. */
 const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -35,7 +35,7 @@ process.stdin.on('data', function (text) {
 			average: '6,2',
 		}).then(function(result){
 			console.log(result);
-			// sender(result, text);
+			sender(result, text);
 		}, function(error){
 			console.log(error);
 		});
@@ -47,7 +47,18 @@ process.stdin.on('data', function (text) {
 			personName: 'Henk de Bakker',
 		}).then(function(result){
 			console.log(result);
-			// sender(result, text);
+			sender(result, text);
+		}, function(error){
+			console.log(error);
+		});
+	} else if (text == 'html'){
+		email.html({
+			title: 'Test HTML email',
+			body: '<h2>simplySwag</h2>',
+			settingsUrl: 'https://app.simplyhomework.nl/settings'
+		}).then(function(result){
+			console.log(result);
+			sender(result, text);
 		}, function(error){
 			console.log(error);
 		});
