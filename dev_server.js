@@ -6,13 +6,22 @@ var express = require('express');
 const PORT = 3000;
 var app = express();
 
-app.get('/cijfer', function (req, res) {
+app.get('/cijfer/:grade?', function (req, res) {
+	if (req.params.grade) {
+		const num = parseFloat(req.params.grade);
+		var grade = num.toString().replace('.', ',');
+		var passed = num >= 5.5;
+	} else {
+		var grade = '9,2';
+		var passed = true;
+	}
+
 	email.cijfer({
 		className: 'Nederlands',
 		classUrl: 'https://app.simplyhomework.nl/class/YfDrLGoRfkRoqNe6E',
 		settingsUrl: 'https://app.simplyhomework.nl/settings',
-		grade: '9,2',
-		passed: true,
+		grade: grade,
+		passed: passed,
 		average: '8,5'
 	}).then(function (data) {
 		res.end(data);
