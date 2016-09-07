@@ -7,14 +7,12 @@ const PORT = 3000;
 var app = express();
 
 app.get('/cijfer/:grade?', function (req, res) {
-	if (req.params.grade) {
-		const num = parseFloat(req.params.grade);
-		var grade = num.toString().replace('.', ',');
-		var passed = num >= 5.5;
-	} else {
-		var grade = '9,2';
-		var passed = true;
+	let num = parseFloat(req.params.grade);
+	if (Number.isNaN(num)) {
+		num = 9.2;
 	}
+	var grade = num.toString().replace('.', ',');
+	var passed = num >= 5.5;
 
 	email.cijfer({
 		className: 'Nederlands',
