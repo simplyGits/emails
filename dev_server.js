@@ -19,6 +19,7 @@ app.get('/cijfer/:grade?', function (req, res) {
 		classUrl: 'https://app.simplyhomework.nl/class/YfDrLGoRfkRoqNe6E',
 		settingsUrl: 'https://app.simplyhomework.nl/settings',
 		grade: grade,
+		description: 'Literatuurmondeling',
 		passed: passed,
 		average: '8,5'
 	}).then(function (data) {
