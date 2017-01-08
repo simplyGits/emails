@@ -23,9 +23,9 @@ const util = require('util');
 
 console.log('Welke template verzenden?');
 process.stdin.on('data', function (text) {
-	//console.log('User gave input: ', util.inspect(text));
+	console.log('User gave input: ', util.inspect(text));
 	text = text.replace(/\W/g, '');
-	if (text == 'cijfer') {
+	if (text === 'cijfer') {
 		email.cijfer({
 			className: 'Nederlands',
 			classUrl: 'https://app.simplyhomework.nl/class/YfDrLGoRfkRoqNe6E',
@@ -39,7 +39,7 @@ process.stdin.on('data', function (text) {
 		}, function(error){
 			console.log(error);
 		});
-	} else if (text == 'project') {
+	} else if (text === 'project') {
 		email.project({
 			projectName: 'Miljoenennota',
 			projectUrl: 'https://app.simplyhomework.nl/class/YfDrLGoRfkRoqNe6E',
@@ -51,11 +51,11 @@ process.stdin.on('data', function (text) {
 		}, function(error){
 			console.log(error);
 		});
-	} else if (text == 'html'){
+	} else if (text === 'html'){
 		email.html({
 			title: 'Test HTML email',
 			body: '<h2>simplySwag</h2>',
-			settingsUrl: 'https://app.simplyhomework.nl/settings'
+			settingsUrl: 'https://app.simplyhomework.nl/settings',
 		}).then(function(result){
 			console.log(result);
 			sender(result, text);
@@ -92,7 +92,9 @@ function sender (result, template) {
 
 	/* Save code */
 	fs.writeFile('test.html', result, function (err) {
-		if (err) throw err;
+		if (err) {
+			throw err;
+		}
 		console.log('Code saved to test.html');
 	});
 }

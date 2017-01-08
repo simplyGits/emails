@@ -21,7 +21,7 @@ app.get('/cijfer/:grade?', function (req, res) {
 		grade: grade,
 		description: 'Literatuurmondeling',
 		passed: passed,
-		average: '8,5'
+		average: '8,5',
 	}).then(function (data) {
 		res.end(data);
 	});
@@ -32,7 +32,7 @@ app.get('/project', function (req, res) {
 		projectName: 'Miljoenennota',
 		projectUrl: 'https://app.simplyhomework.nl/class/YfDrLGoRfkRoqNe6E',
 		settingsUrl: 'https://app.simplyhomework.nl/settings',
-		personName: 'Henk de Bakker'
+		personName: 'Henk de Bakker',
 	}).then(function (data) {
 		res.end(data);
 	});
@@ -42,7 +42,7 @@ app.get('/html', function (req, res) {
 	email.html({
 		title: 'Test HTML email',
 		body: '<h2>simplySwag</h2>',
-		settingsUrl: 'https://app.simplyhomework.nl/settings'
+		settingsUrl: 'https://app.simplyhomework.nl/settings',
 	}).then(function (data) {
 		res.end(data);
 	});
